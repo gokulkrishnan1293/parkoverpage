@@ -1,9 +1,37 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect } from "react";
+
 import "./App.css";
 
 function App() {
+  useEffect(() => {
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let iteration = 0;
+    const intervalId = setInterval(() => {
+      const name = document.querySelector(".name");
+
+      //assign Name to it
+
+      name.innerText = name.innerText
+        .split("")
+        .map((letter, index) => {
+          if (index < iteration) {
+            return name.dataset.value[index];
+          }
+
+          return letters[Math.floor(Math.random() * 26)];
+        })
+        .join("");
+
+      if (iteration >= name.dataset.value.length) {
+        iteration = 0;
+      } else {
+        iteration += 1 / 3;
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <>
       <div className="screen">
