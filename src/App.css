@@ -153,9 +153,8 @@
     height: 100%;
   }
   
-  .screen > .screen-content > .screen-user  {
+  .screen > .screen-content  {
   position: relative;
   font-size: 2.25 rem;
-  font-weight: 400;
 }
 }
