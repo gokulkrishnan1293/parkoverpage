@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import "./App.css";
 
 function App() {
@@ -9,8 +8,11 @@ function App() {
     const intervalId = setInterval(() => {
       const name = document.querySelector(".name");
 
-      //assign Name to it
+      // Add punch by changing color dynamically
+      const colors = ["#FF5733", "#33FF57", "#3357FF", "#F333FF", "#F3FF33"];
+      name.style.color = colors[Math.floor(Math.random() * colors.length)];
 
+      // Assign Name to it
       name.innerText = name.innerText
         .split("")
         .map((letter, index) => {
@@ -36,7 +38,6 @@ function App() {
     <>
       <div className="screen">
         <div className="screen-overlay"></div>
-
         <div className="screen-content">
           <div className="screen-user">
             <span className="name" data-value="GOKUL">
