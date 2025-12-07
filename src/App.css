@@ -1,46 +1,206 @@
-/* App.css */
+/* App.css - Performance Optimized */
 
-/* Make the screen take full height and center the content */
 .screen {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100%;
-  background-color: #282c34;
-  color: white;
-  font-family: 'Arial', sans-serif;
-}
-
-.screen-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
 }
 
 .screen-content {
   position: relative;
   text-align: center;
-  z-index: 1;
+  z-index: 10;
+  padding: 2rem;
 }
 
-.name {
-  font-size: 4rem;
-  font-weight: bold;
-  transition: color 0.3s ease;
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 100;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle.dark {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.theme-toggle.light {
+  background: rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+  transform: rotate(180deg);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Name Container - Optimized for performance */
+.name-container {
+  position: relative;
+  display: inline-block;
+  font-size: 12rem;
+  font-weight: 900;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  user-select: none;
+
+  /* Colorful gradient text */
+  background: linear-gradient(45deg,
+      #a855f7,
+      #ec4899,
+      #f59e0b,
+      #3b82f6,
+      #06b6d4,
+      #8b5cf6,
+      #a855f7);
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: colorFlow 8s ease infinite;
+
+  /* Simplified glow - only 2 layers for performance */
+  filter:
+    drop-shadow(0 0 30px rgba(168, 85, 247, 0.6)) drop-shadow(0 0 60px rgba(236, 72, 153, 0.4));
+
+  /* Use will-change for better performance */
+  will-change: filter, transform;
+  transition: transform 0.3s ease;
+}
+
+/* Light mode text adjustments */
+.screen.light .name-container {
+  background: linear-gradient(45deg,
+      #7c3aed,
+      #db2777,
+      #d97706,
+      #2563eb,
+      #0891b2,
+      #6d28d9,
+      #7c3aed);
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter:
+    drop-shadow(0 0 20px rgba(124, 58, 237, 0.5)) drop-shadow(0 0 40px rgba(219, 39, 119, 0.3));
+}
+
+@keyframes colorFlow {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Simplified hover effect */
+.name-container:hover {
+  transform: scale(1.05);
+  filter:
+    drop-shadow(0 0 40px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 70px rgba(236, 72, 153, 0.6));
+}
+
+.screen.light .name-container:hover {
+  filter:
+    drop-shadow(0 0 30px rgba(124, 58, 237, 0.7)) drop-shadow(0 0 50px rgba(219, 39, 119, 0.5));
+}
+
+/* Responsive design */
+@media (max-width: 1600px) {
+  .name-container {
+    font-size: 10rem;
+  }
+}
+
+@media (max-width: 1400px) {
+  .name-container {
+    font-size: 9rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .name-container {
+    font-size: 7rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .name-container {
+    font-size: 5.5rem;
+  }
+
+  .theme-toggle {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    top: 1.5rem;
+    right: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .name {
-    font-size: 3rem;
+  .name-container {
+    font-size: 4.5rem;
+    letter-spacing: 0.05em;
+    /* Further reduce effects on mobile */
+    filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5));
+  }
+
+  .screen.light .name-container {
+    filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.4));
+  }
+}
+
+@media (max-width: 600px) {
+  .name-container {
+    font-size: 3.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .name {
-    font-size: 2rem;
+  .name-container {
+    font-size: 3rem;
+    letter-spacing: 0.03em;
+  }
+
+  .theme-toggle {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .name-container {
+    font-size: 2.5rem;
   }
 }
